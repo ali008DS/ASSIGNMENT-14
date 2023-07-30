@@ -1,0 +1,29 @@
+def can_be_arranged_increasing(queue):
+    stack = []
+    expected_value = 1  # The expected value to be pushed onto the stack next
+
+    while queue:
+        if queue[0] == expected_value:
+            queue.pop(0)
+            expected_value += 1
+        elif stack and stack[-1] == expected_value:
+            stack.pop()
+            expected_value += 1
+        else:
+            stack.append(queue.pop(0))
+
+    while stack:
+        if stack[-1] == expected_value:
+            stack.pop()
+            expected_value += 1
+        else:
+            return "No"
+
+    return "Yes"
+
+# Examples
+queue1 = [5, 1, 2, 3, 4]
+queue2 = [5, 1, 2, 6, 3, 4]
+
+print(can_be_arranged_increasing(queue1))  # Output: Yes
+print(can_be_arranged_increasing(queue2))  # Output: No

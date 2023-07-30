@@ -1,0 +1,34 @@
+def find_nearest_greater_frequency(arr):
+    frequency_dict = {}
+    stack = []
+    result = []
+
+    # Calculate the frequency of each element and store it in the dictionary
+    for num in arr:
+        frequency_dict[num] = frequency_dict.get(num, 0) + 1
+
+    # Iterate through the array from right to left
+    for num in reversed(arr):
+        # Pop elements from the stack if their frequency is less than or equal to the current element
+        while stack and frequency_dict[stack[-1]] <= frequency_dict[num]:
+            stack.pop()
+
+        # Find the nearest greater frequency element for the current element
+        if stack:
+            result.append(stack[-1])
+        else:
+            result.append(-1)
+
+        # Push the current element to the stack
+        stack.append(num)
+
+    # Reverse the result to get the correct order
+    result.reverse()
+    return result
+
+# Examples
+arr1 = [1, 1, 2, 3, 4, 2, 1]
+arr2 = [1, 1, 1, 2, 2, 2, 2, 11, 3, 3]
+
+print(find_nearest_greater_frequency(arr1))  # Output: [-1, -1, 1, 2, 2, 1, -1]
+print(find_nearest_greater_frequency(arr2))  # Output: [2, 2, 2, -1, -1, -1, -1, 3, -1, -1]

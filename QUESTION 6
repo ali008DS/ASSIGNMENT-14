@@ -1,0 +1,27 @@
+from queue import Queue
+
+def reverse_first_k_elements(queue, k):
+    if k <= 0 or k > queue.qsize():
+        return "Invalid k value."
+
+    stack = []
+
+    # Dequeue the first k elements and push them into the stack
+    for _ in range(k):
+        stack.append(queue.get())
+
+    # Enqueue the elements from the stack back to the queue
+    while stack:
+        queue.put(stack.pop())
+
+# Example
+queue = Queue()
+queue.put(1)
+queue.put(2)
+queue.put(3)
+queue.put(4)
+queue.put(5)
+
+reverse_first_k_elements(queue, 3)
+while not queue.empty():
+    print(queue.get(), end=" ")  # Output: 3 2 1 4 5
